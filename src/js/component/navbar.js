@@ -1,45 +1,50 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/home.scss";
-
-export const Navbar = () => {
+import "bootstrap/dist/css/bootstrap.min.css";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import { propTypes } from "react-bootstrap/esm/Image";
+import { Card } from "./card";
+import { Context } from "../store/appContext";
+export const Navbar = props => {
+	const { store, actions } = useContext(Context);
 	return (
 		<nav className="navbar">
 			<div className="container-fluid">
 				<Link to="/">
 					<a className="navbar-brand" href="/">
 						<img
-							src="https://logos-marcas.com/wp-content/uploads/2020/11/Star-Wars-Logo.png?__cf_chl_jschl_tk__=316bb80ac745e72bfc5bd2e10c15360ed3ac242d-1616039802-0-AQTi7LeTvemwd48rg5IHCpbt4Z5HIemACuMNNHGxG-Xu2l6VypQZ5YiuJHr4_Mnmn4j1awm7_jx9z-p9AWa4PEq0gjyZ7upsgPTEe2Zf885f55SqZMiFDdKX_m68It45u6X6RPLlwSszrX3OPWLDTVJyJcWQhh0Hx88aET-ai8ZSgb6_2Alb989dYilCELUI4Sg5D-0s1QPs08xhKNvS7mKzX_uJc2qulNE2IG0MD2x7dME3komko4CcdT4jY0UeVWm-LnDEXMJ-CYgZphazj9NWcRdU3RtnThi8ZQ_TKqOlHBc3OQInZF4A0PZi__aq6Eum2PyZ5jOW1lO6CArOOTAcQ73UCspaHx8l3-T7snHDuEefjwymfs_GVAhc86lFh5aJ_LTkDOiQx4iSFtEcK3bg-NGXFy-C7VwXA514YDIpbXvkp4c8KBXUVpzZX4eHWg"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/250px-Star_Wars_Logo.svg.png"
 							alt=""
-							width="90"
-							height="45 !important"
+							width="150"
+							height="90 !important"
 							className="d-inline-block align-top"
+							backgroundColor="white"
 						/>{" "}
 					</a>
 				</Link>
 
 				<div className="dropdown">
-					<button
-						style={{ color: "rgb(121, 104, 9)", backgroundColor: "white" }}
-						className="btn btn-primary dropdown-toggle"
-						type="button"
-						id="dropdownMenuButton"
-						data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false">
-						Favoritos <i className="fas fa-eye" />
-					</button>
-					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a className="dropdown-item" href="#">
-							Action
-						</a>
-						<a className="dropdown-item" href="#">
-							Another action
-						</a>
-						<a className="dropdown-item" href="#">
-							Something else here
-						</a>
-					</div>
+					<Dropdown>
+						<Dropdown.Toggle variant="info" id="dropdown-basic">
+							Favoritos <div className="cuad"> {store.favoritos.length} </div>
+						</Dropdown.Toggle>
+						<Dropdown.Menu>
+							{store.favoritos.map((items, i) => {
+								return (
+									<Dropdown.Item key={`items -${i}`} href="#/action-1">
+										{items.name} {""}{" "}
+										<i
+											className="fas fa-times"
+											style={{ color: "red" }}
+											onClick={() => actions.Delete(i)}
+										/>
+									</Dropdown.Item>
+								);
+							})}
+						</Dropdown.Menu>
+					</Dropdown>
 				</div>
 			</div>
 		</nav>

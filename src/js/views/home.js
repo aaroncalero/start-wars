@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Card } from "../component/card";
+import "bootstrap/dist/css/bootstrap.css";
 import { PlanetsCard } from "../component/planetsCard";
 
 export const Home = () => {
@@ -11,23 +12,27 @@ export const Home = () => {
 	useEffect(() => {
 		actions.getPlanets();
 		actions.getPeoples();
-		actions.Favorite();
 	}, []);
 
 	return (
 		<div className="container-fluid ">
-			<div className="scrollmenu">
+			<h1 className="pers" style={{ color: " #F8FCFB" }}>
+				Personajes
+			</h1>
+			<div className="scrollmenu scro1">
 				<div className="row text-center">
 					<div className="col" style={{ margin: "3rem 1rem 1rem 1rem" }}>
 						{store.peoples.map((items, i) => {
-							//  actions.getInfP(items.uid);
 							return (
 								<div key={i} style={{ marginRight: "10px" }}>
 									<Card
 										title={items.name}
+										gender={items.gender}
+										hair={items.hair_color}
+										index={i + 1}
+										eye={items.eye_color}
 										url={items.url}
-										uid={items.uid}
-										//	gender={store.inf.gender}
+										imgUrl={store.img[i]}
 									/>
 								</div>
 							);
@@ -35,6 +40,9 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
+			<h1 className="plane" style={{ color: " #F8FCFB", marginTop: "2rem" }}>
+				Planetas
+			</h1>
 			<div className="scrollmenu scro">
 				<div className="row text-center">
 					<div className="col" style={{ margin: "3rem 1rem 1rem 1rem" }}>
@@ -42,10 +50,11 @@ export const Home = () => {
 							return (
 								<div key={i} style={{ marginRight: "10px" }}>
 									<PlanetsCard
-										UrlImage={items.UrlImage}
+										urlImgP={store.imgP[i]}
+										index={i + 1}
 										name={items.name}
 										terrain={items.terrain}
-										uid={items.uid}
+										population={items.population}
 									/>
 								</div>
 							);
